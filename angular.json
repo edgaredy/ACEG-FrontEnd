@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ACEG"
+    }
+  },
+  "defaultProject": "ACEG",
+  "cli": {
+    "analytics": false
+  }
 }
