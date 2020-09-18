@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginMainModule } from './login-main.module/login-main.module';
 import { HomeModule } from './home/home.module';
 import { RegistroModule } from './registro/registro.module';
+import { UtilModule } from './util.module/util.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { RegistroModule } from './registro/registro.module';
     LoginMainModule,
     HomeModule,
     RegistroModule,
+    UtilModule,
     AppRoutingModule,
     BrowserModule
   ],

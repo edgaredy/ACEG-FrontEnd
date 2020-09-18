@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { RegistroComponent } from './components/registro.component';
 
-const exampleRoutes: Routes = [
+const routes: Routes = [
     {
        path: 'registro',
        component: RegistroComponent
@@ -10,7 +10,7 @@ const exampleRoutes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(exampleRoutes)],
+    imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
 export class RegistroRouting {
