@@ -7,6 +7,39 @@
                     Crear nueva cuenta
                 </span>
 
+                <span *ngIf="f.submitted && f.controls['role'].errors" class="text-danger animated fadeIn">El tipo de usuario es obligatorio</span>
+                <div class="wrap-input100 m-b-16">
+                    <label class="fs-19 p-t-7 p-l-39">Tipo de Usuario</label>
+                    <select class="custom-select" name="role" id="role" [(ngModel)]="usuario.role" required>
+                        <option [ngValue]="null" disabled>Selecciona una opci&oacute;n</option>
+                        <option value="ROLE_CARNICERO">Carnicero</option>
+                        <option value="ROLE_CLIENTE">Cliente</option>
+                        <option value="ROLE_PROVEEDOR">Proveedor</option>
+                    </select>
+                </div>
+
+                <span *ngIf="f.submitted && f.controls['nombre'].errors" class="text-danger animated fadeIn">El nombre es obligatorio</span>
+                <div class="wrap-input100 m-b-16">
+                    <input class="input100" type="text" name="nombre" placeholder="Nombre" [(ngModel)]="usuario.nombre" required>
+                    <span class="focus-input100"></span>
+                </div>
+
+                <span *ngIf="f.submitted && f.controls['apellido'].errors" class="text-danger animated fadeIn">El apellido es obligatorio</span>
+                <div class="wrap-input100 m-b-16">
+                    <input class="input100" type="text" name="apellido" placeholder="Apellidos" [(ngModel)]="usuario.apellido" required>
+                    <span class="focus-input100"></span>
+                </div>
+
+                <span *ngIf="f.submitted && f.controls['genero'].errors" class="text-danger animated fadeIn">El g&eacute;nero es obligatorio</span>
+                <div class="wrap-input100 m-b-16">
+                    <label class="fs-19 p-t-7 p-l-39">G&eacute;nero</label>
+                    <select class="custom-select" name="genero" id="genero" [(ngModel)]="usuario.genero" required>
+                        <option [ngValue]="null" disabled>Selecciona una opci&oacute;n</option>
+                        <option value="H">Masculino</option>
+                        <option value="M">Femenino</option>
+                    </select>
+                </div>
+
                 <span *ngIf="f.submitted && f.controls['email'].errors" class="text-danger animated fadeIn">El correo es obligatorio</span>
                 <div class="wrap-input100 m-b-16">
                     <input class="input100" type="email" name="email" placeholder="Email" [(ngModel)]="usuario.email" email required>
@@ -19,9 +52,64 @@
                     <span class="focus-input100"></span>
                 </div>
 
-                <span *ngIf="f.submitted && f.controls['role'].errors" class="text-danger animated fadeIn">El nombre es obligatorio</span>
+                <span *ngIf="f.submitted && f.controls['telefono'].errors" class="text-danger animated fadeIn">El tel&eacute;fono es obligatorio</span>
                 <div class="wrap-input100 m-b-16">
-                    <input class="input100" type="text" name="role" placeholder="Role" [(ngModel)]="usuario.role" minlength="3" required>
+                    <input class="input100" type="text" name="telefono" placeholder="Tel&eacute;fono" [(ngModel)]="usuario.telefono" required>
+                    <span class="focus-input100"></span>
+                </div>
+
+                <span *ngIf="f.submitted && f.controls['direccion'].errors" class="text-danger animated fadeIn">La direcci&oacute;n es obligatoria</span>
+                <div class="wrap-input100 m-b-16">
+                    <input class="input100" type="text" name="direccion" placeholder="Direcci&oacute;n" [(ngModel)]="usuario.direccion" required>
+                    <span class="focus-input100"></span>
+                </div>
+
+                <span *ngIf="f.submitted && f.controls['cp'].errors" class="text-danger animated fadeIn">El codigo postal es obligatorio</span>
+                <div class="wrap-input100 m-b-16">
+                    <input class="input100" type="text" name="cp" placeholder="Codigo Postal" [(ngModel)]="usuario.cp" required>
+                    <span class="focus-input100"></span>
+                </div>
+
+                <span *ngIf="f.submitted && f.controls['idEstado'].errors" class="text-danger animated fadeIn">El estado es obligatorio</span>
+                <div class="wrap-input100 m-b-16" *ngIf="usuario.role != null">
+                    <label class="fs-19 p-t-7 p-l-39">Estado</label>
+                    <select class="custom-select" name="idEstado" id="idEstado" [(ngModel)]="usuario.idEstado" (change)="getMunicipios(); validarGetCarnicerias()" required>
+                        <option [ngValue]="null" disabled>Selecciona una opci&oacute;n</option>
+                        <option *ngFor ="let estado of dataEstado; let i = index" value="{{i + 1}}">{{estado}}</option>
+                    </select>
+                </div>
+
+                <span *ngIf="f.submitted && f.controls['idMunicipio']?.errors" class="text-danger animated fadeIn">El municipio es obligatorio</span>
+                <div class="wrap-input100 m-b-16" *ngIf="dataMunicipios.length > 0 && usuario.idEstado != null">
+                    <label class="fs-19 p-t-7 p-l-39">Municipio</label>
+                    <select class="custom-select" name="idMunicipio" id="idMunicipio" [(ngModel)]="usuario.idMunicipio" required>
+                        <option [ngValue]="null" disabled>Selecciona una opci&oacute;n</option>
+                        <option *ngFor ="let municipio of dataMunicipios; let i = index" value="{{i + 1}}">{{municipio}}</option>
+                    </select>
+                </div>
+
+                <div class="login100-form" *ngIf="usuario.role == 'ROLE_CARNICERO'">
+                    <span *ngIf="f.submitted && f.controls['sueldoMensual']?.errors" class="text-danger animated fadeIn">El sueldo mensual es obligatorio</span>
+                    <div class="wrap-input100 m-b-16">
+                        <input class="input100" type="text" name="sueldoMensual" placeholder="Sueldo Mensual" [(ngModel)]="usuario.sueldoMensual" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <span *ngIf="f.submitted && f.controls['idCarniceria']?.errors" class="text-danger animated fadeIn">La carnicer&iacute;a es obligatoria</span>
+                    <div class="wrap-input100 m-b-16" *ngIf="usuario.idEstado != null">
+                        <label class="fs-19 p-t-7 p-l-39">Carnicer&iacute;a</label>
+                        <select class="custom-select option" name="idCarniceria" id="idCarniceria" [(ngModel)]="usuario.idCarniceria" required>
+                            <option [ngValue]="null" disabled>Selecciona una opci&oacute;n</option>
+                            <option [ngValue]="null" disabled>ID || NOMBRE CARNICERIA || ESTADO || MUNICIPIO || DIRECCI&Oacute;N || CP</option>
+                            <option *ngFor ="let carniceria of dataCarniceria; let i = index;" value="{{idCarnicerias[i]}}">{{carniceria}}</option>
+                            <option value="0">NO EXISTE MI CARNICER&Iacute;A, AGREGAR DESPU&Eacute;S</option>
+                        </select>
+                    </div>
+                </div>
+
+                <span *ngIf="f.submitted && f.controls['nombreEmpresa']?.errors" class="text-danger animated fadeIn">El nombre de la empresa es obligatorio</span>
+                <div class="wrap-input100 m-b-16" *ngIf="usuario.role == 'ROLE_PROVEEDOR'">
+                    <input class="input100" type="text" name="nombreEmpresa" placeholder="Nombre de Empresa" [(ngModel)]="usuario.nombreEmpresa" required>
                     <span class="focus-input100"></span>
                 </div>
 
